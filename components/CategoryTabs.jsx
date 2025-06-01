@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import COLORS from '../constants/colors';
 
 const categories = [
-  {key: 'mood', label: 'Mood'},
-  {key: 'chakra', label: 'Chakra'},
-  {key: 'affirmation', label: 'Affirmation'},
+  { key: 'mood', label: 'Mood' },
+  { key: 'chakra', label: 'Chakra' },
+  { key: 'affirmation', label: 'Affirmation' },
 ];
 
-const CategoryTabs = ({activeCategory, onChange}) => {
+const CategoryTabs = ({ activeCategory, onChange }) => {
   return (
     <View style={styles.container}>
       {categories.map((category, index) => {
@@ -17,12 +17,14 @@ const CategoryTabs = ({activeCategory, onChange}) => {
           <React.Fragment key={category.key}>
             <TouchableOpacity
               style={[styles.tab, isActive && styles.activeTab]}
-              onPress={() => onChange(category.key)}>
+              onPress={() => onChange(category.key)}
+            >
               <Text
                 style={[
                   styles.label,
                   isActive ? styles.activeLabel : styles.inactiveLabel,
-                ]}>
+                ]}
+              >
                 {category.label}
               </Text>
             </TouchableOpacity>
@@ -45,17 +47,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
-  tab: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 12,
-  },
   activeTab: {
     backgroundColor: COLORS.neutralLightest,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
+    textAlign: 'center',
   },
   activeLabel: {
     color: COLORS.textPrimary,

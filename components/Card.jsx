@@ -1,18 +1,22 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import COLORS from '../constants/colors';
+import { TouchableOpacity } from 'react-native';
+import {getPlaylistById} from '../data/playlists';
 
-const Card = ({title, subtitle, imageSource}) => {
+const Card = ({playlistId, onPress}) => {
+  const playlist = getPlaylistById(playlistId);
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.shadowWrapper}>
-        <View style={styles.card}>
-          <Image source={imageSource} style={styles.image} />
+        <TouchableOpacity style={styles.card} onPress={onPress}>
+          <Image source={playlist.image} style={styles.image} />
           <View style={styles.content}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subtitle}>{subtitle}</Text>
+            <Text style={styles.title}>{playlist.title}</Text>
+            <Text style={styles.subtitle}>{playlist.subtitle}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
   },
   shadowWrapper: {
     shadowColor: COLORS.neutralDark,
-    shadowOffset: {width: -2, height: 4},
+    shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,

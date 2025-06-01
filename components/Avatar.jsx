@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-const Avatar = ({onPress}) => {
+const Avatar = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image

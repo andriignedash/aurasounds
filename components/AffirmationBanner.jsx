@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import CustomButton from './CustomButton';
 import COLORS from '../constants/colors';
 
-const AffirmationBanner = () => {
+const AffirmationBanner = ({onMorePress}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Affirmation of the day</Text>
@@ -11,7 +11,7 @@ const AffirmationBanner = () => {
         I am centered and connected to my energy.
       </Text>
       <View style={styles.buttonWrapper}>
-        <CustomButton title="More" onPress={() => {}} />
+        <CustomButton title="More" onPress={onMorePress} />
       </View>
     </View>
   );
