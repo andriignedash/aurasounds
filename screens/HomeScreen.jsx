@@ -8,6 +8,7 @@ import moodPlaylists from '../data/moodPlaylists';
 import chakraPlaylists from '../data/chakraPlaylists';
 import {Image, Text} from 'react-native';
 import CustomButton from '../components/CustomButton';
+import AffirmationSection from '../components/AffirmationSection';
 
 export default function HomeScreen({navigation}) {
   const [activeCategory, setActiveCategory] = useState('mood');
@@ -54,25 +55,7 @@ export default function HomeScreen({navigation}) {
           </View>
         );
       case 'affirmation':
-        return (
-          <View style={styles.affirmationWrapper}>
-            <Image
-              source={require('../assets/images/affirmation.png')}
-              style={styles.affirmationImage}
-            />
-            <Text style={styles.affirmationText}>
-              I allow myself to feel peace today.
-            </Text>
-            <View style={styles.buttonRow}>
-              <CustomButton
-                title="Save to favorites"
-                variant="outline"
-                onPress={() => {}}
-              />
-              <CustomButton title="New affirmation" onPress={() => {}} />
-            </View>
-          </View>
-        );
+        return <AffirmationSection />;
       default:
         return null;
     }
