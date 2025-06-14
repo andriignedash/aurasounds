@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import COLORS from '../constants/colors';
+import {ThemeContext} from '../context/ThemeContext';
 
 const tabs = [
   {key: 'playlists', label: 'Playlists'},
@@ -8,6 +8,50 @@ const tabs = [
 ];
 
 const FavouritesTabs = ({activeTab, onChange}) => {
+  const {themeColors} = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      padding: 4,
+      backgroundColor: themeColors.neutralLight,
+      borderRadius: 16,
+      overflow: 'hidden',
+      alignSelf: 'center',
+      alignItems: 'center',
+      marginBottom: 24,
+    },
+    activeTab: {
+      backgroundColor: themeColors.neutralLightest,
+    },
+    tab: {
+      flex: 1,
+      paddingVertical: 8,
+      borderRadius: 12,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    activeLabel: {
+      color: themeColors.textPrimary,
+      fontWeight: '700',
+    },
+    inactiveLabel: {
+      color: themeColors.textSecondary,
+    },
+    divider: {
+      width: 1,
+      height: 20,
+      backgroundColor: themeColors.neutralMedium,
+      marginHorizontal: 8,
+      opacity: 0.4,
+    },
+  });
+
   return (
     <View style={styles.container}>
       {tabs.map((tab, index) => {
@@ -32,47 +76,5 @@ const FavouritesTabs = ({activeTab, onChange}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    padding: 4,
-    backgroundColor: COLORS.neutralLight,
-    borderRadius: 16,
-    overflow: 'hidden',
-    alignSelf: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  activeTab: {
-    backgroundColor: COLORS.neutralLightest,
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 8,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  activeLabel: {
-    color: COLORS.textPrimary,
-    fontWeight: '700',
-  },
-  inactiveLabel: {
-    color: COLORS.textSecondary,
-  },
-  divider: {
-    width: 1,
-    height: 20,
-    backgroundColor: COLORS.neutralMedium,
-    marginHorizontal: 8,
-    opacity: 0.4,
-  },
-});
 
 export default FavouritesTabs;

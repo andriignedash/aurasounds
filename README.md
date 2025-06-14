@@ -7,7 +7,6 @@
 - Categories of affirmations and chakras
 - Components implemented in the Figma design style with responsive styling
 
-
 ## 📦 Assignment 5: API Integration and Data Handling
 
 This app implements all required steps of the [cross_assignment_5] task:
@@ -23,3 +22,26 @@ This app implements all required steps of the [cross_assignment_5] task:
 
 ![Affirmation Demo](./screenshots/affirmation-demo.gif)
 
+## 📗 Assignment 6: State Management with Context API and Redux
+
+- ✅ **Context API for Theme:**  
+  - Implemented `ThemeContext` with `ThemeProvider` to manage light/dark themes globally.  
+  - Added theme toggle switch allowing dynamic theme changes.  
+  - Applied theme colors consistently across multiple components and navigation headers.
+
+- ✅ **Redux for Favorites Management:**  
+  - Created `favoritesSlice` using Redux Toolkit with actions to add and remove playlists from favorites.  
+  - Configured Redux store and connected it to the app via `<Provider>`.  
+  - Managed favorites state via `useSelector` and `useDispatch` hooks.  
+  - Enabled adding/removing favorites in `PlaylistDetailsScreen` via a like button.  
+  - Displayed favorite playlists on the `FavouritesScreen` with navigation to playlist details.
+
+- ✅ **Code Modularity and Clean Architecture:**  
+  - Organized Context and Redux slices in separate files.  
+  - Used constants for colors and texts for better maintainability.  
+  - Passed dynamic data via props.  
+  - Maintained clear and commented code following best practices.
+
+### 🎥 Demo: Themes and Favourites
+
+![Themes and Favourites Demo](./screenshots/themesAndFavourites.gif)

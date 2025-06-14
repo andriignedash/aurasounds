@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {View, ScrollView, StyleSheet, Text, Image} from 'react-native';
 import CategoryTabs from '../components/CategoryTabs';
 import Card from '../components/Card';
 import AffirmationBanner from '../components/AffirmationBanner';
-import COLORS from '../constants/colors';
 import moodPlaylists from '../data/moodPlaylists';
 import chakraPlaylists from '../data/chakraPlaylists';
-import {Image, Text} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AffirmationSection from '../components/AffirmationSection';
+import {ThemeContext} from '../context/ThemeContext';
 
 export default function HomeScreen({navigation}) {
   const [activeCategory, setActiveCategory] = useState('mood');
+  const {themeColors} = useContext(ThemeContext);
 
   const renderContent = () => {
     switch (activeCategory) {
@@ -64,8 +64,9 @@ export default function HomeScreen({navigation}) {
   return (
     <ScrollView
       contentContainerStyle={styles.scrollContent}
-      style={styles.scroll}>
-      <View style={styles.container}>
+      style={{backgroundColor: themeColors.background}}>
+      <View
+        style={[styles.container, {backgroundColor: themeColors.background}]}>
         <CategoryTabs
           activeCategory={activeCategory}
           onChange={setActiveCategory}
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 16,
     paddingHorizontal: 16,
-    backgroundColor: COLORS.neutralLightest,
   },
   grid: {
     flexDirection: 'row',
@@ -95,9 +95,6 @@ const styles = StyleSheet.create({
   cardWrapper: {
     width: '48%',
     marginBottom: 16,
-  },
-  scroll: {
-    backgroundColor: COLORS.neutralLightest,
   },
   affirmationWrapper: {
     alignItems: 'center',
@@ -114,7 +111,6 @@ const styles = StyleSheet.create({
   affirmationText: {
     fontSize: 20,
     fontWeight: '700',
-    color: COLORS.textPrimary,
     textAlign: 'center',
     marginBottom: 75,
   },

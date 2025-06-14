@@ -1,15 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStackNavigator from './HomeStackNavigator';
-import FavouritesScreen from '../screens/FavouritesScreen';
+import FavouritesStackNavigator from './FavouritesStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
-import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { SCREENS } from '../constants/texts';
+import {ThemeContext} from '../context/ThemeContext';
 
 const Tab = createBottomTabNavigator();
 
-// Icons for each tab
+// Icons
 const HomeIcon = ({color}) => (
   <Icon name="home-outline" size={20} color={color} />
 );
@@ -21,75 +20,42 @@ const ProfileIcon = ({color}) => (
 );
 
 const BottomTabNavigator = () => {
+  const {themeColors} = useContext(ThemeContext);
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.textPrimary,
-        tabBarInactiveTintColor: COLORS.textSecondary,
+        tabBarActiveTintColor: themeColors.primary,
+        tabBarInactiveTintColor: themeColors.textSecondary,
         tabBarStyle: {
-          backgroundColor: COLORS.neutralLightest,
+          backgroundColor: themeColors.background,
           height: 60,
-          borderTopColor: 'transparent',
+          borderTopColor: themeColors.border,
         },
         tabBarLabelStyle: {
           fontSize: 12,
         },
       }}>
-      {/* Home tab with its own Stack Navigator */}
       <Tab.Screen
         name="Home"
         component={HomeStackNavigator}
         options={{
           tabBarIcon: HomeIcon,
-          headerShown: false,
-          headerTitle: SCREENS.HOME,
-          headerStyle: {
-            backgroundColor: COLORS.neutralLightest,
-          },
-          headerTitleStyle: {
-            color: COLORS.textPrimary,
-            fontWeight: '700',
-          },
-          headerTintColor: COLORS.textPrimary,
         }}
       />
-      {/* Favourites tab as a standalone screen */}
       <Tab.Screen
         name="Favourites"
-        component={FavouritesScreen}
+        component={FavouritesStackNavigator}
         options={{
           tabBarIcon: FavouritesIcon,
-          headerShown: true,
-          title: SCREENS.FAVOURITES,
-          backgroundColor: COLORS.neutralLightest,
-          headerStyle: {
-            backgroundColor: COLORS.neutralLightest,
-          },
-          headerTitleStyle: {
-            color: COLORS.textPrimary,
-            fontWeight: '700',
-          },
-          headerTintColor: COLORS.textPrimary,
         }}
       />
-      {/* Profile tab using its own stack for nested navigation */}
       <Tab.Screen
         name="Profile"
         component={ProfileStackNavigator}
         options={{
           tabBarIcon: ProfileIcon,
-          headerTitle: SCREENS.PROFILE,
-          headerShown: false,
-          backgroundColor: COLORS.neutralLightest,
-          headerStyle: {
-            backgroundColor: COLORS.neutralLightest,
-          },
-          headerTitleStyle: {
-            color: COLORS.textPrimary,
-            fontWeight: '700',
-          },
-          headerTintColor: COLORS.textPrimary,
         }}
       />
     </Tab.Navigator>

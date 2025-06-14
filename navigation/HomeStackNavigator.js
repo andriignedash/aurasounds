@@ -1,34 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import PlaylistDetailsScreen from '../screens/PlaylistDetailsScreen';
-import COLORS from '../constants/colors';
 import {getPlaylistById} from '../data/playlists';
 import {SCREENS} from '../constants/texts';
+import {ThemeContext} from '../context/ThemeContext';
 
 const Stack = createNativeStackNavigator();
 
 const HomeStackNavigator = () => {
+  const {themeColors} = useContext(ThemeContext);
+
   return (
     <Stack.Navigator>
-      {/* Main Home screen with static header configuration */}
+      {/* Home Screen */}
       <Stack.Screen
         name="HomeMain"
         component={HomeScreen}
         options={{
           title: SCREENS.HOME,
           headerStyle: {
-            backgroundColor: COLORS.neutralLightest,
+            backgroundColor: themeColors.background,
           },
           headerTitleStyle: {
-            color: COLORS.textPrimary,
+            color: themeColors.textPrimary,
             fontWeight: '700',
           },
-          headerTintColor: COLORS.textPrimary,
+          headerTintColor: themeColors.textPrimary,
         }}
       />
 
-      {/* PlaylistDetails screen with dynamic header title based on selected playlist */}
+      {/* Playlist Details Screen */}
       <Stack.Screen
         name="PlaylistDetails"
         component={PlaylistDetailsScreen}
@@ -36,18 +38,16 @@ const HomeStackNavigator = () => {
           const playlist = getPlaylistById(route.params.playlistId);
 
           return {
-            // Dynamic screen title from playlist data
             title: playlist.title,
-            // Custom back button text
             headerBackTitle: 'Back',
             headerStyle: {
-              backgroundColor: COLORS.neutralLightest,
+              backgroundColor: themeColors.background,
             },
             headerTitleStyle: {
-              color: COLORS.textPrimary,
+              color: themeColors.textPrimary,
               fontWeight: '700',
             },
-            headerTintColor: COLORS.textPrimary,
+            headerTintColor: themeColors.textPrimary,
           };
         }}
       />

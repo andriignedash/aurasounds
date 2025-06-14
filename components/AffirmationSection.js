@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Text, Image, ActivityIndicator, StyleSheet} from 'react-native';
 import CustomButton from './CustomButton';
 import {fetchAffirmations} from '../api/api';
-import COLORS from '../constants/colors';
+import {ThemeContext} from '../context/ThemeContext';
 
 export default function AffirmationSection() {
+  const {themeColors} = useContext(ThemeContext);
   const [affirmations, setAffirmations] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -29,14 +30,50 @@ export default function AffirmationSection() {
   };
 
   if (loading) {
-    return <ActivityIndicator style={{marginTop: 32}} size="large" />;
+    return (
+      <ActivityIndicator
+        style={{marginTop: 32}}
+        size="large"
+        color={themeColors.textPrimary}
+      />
+    );
   }
 
   if (error) {
-    return <Text style={{color: 'red', marginTop: 32}}>{error}</Text>;
+    return (
+      <Text style={{color: 'red', marginTop: 32, textAlign: 'center'}}>
+        {error}
+      </Text>
+    );
   }
 
   const current = affirmations[currentIndex];
+
+  const styles = StyleSheet.create({
+    wrapper: {
+      alignItems: 'center',
+      marginTop: 35,
+      paddingBottom: 32,
+    },
+    image: {
+      width: 300,
+      height: 250,
+      borderRadius: 20,
+      resizeMode: 'cover',
+      marginBottom: 70,
+    },
+    text: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: themeColors.textPrimary,
+      textAlign: 'center',
+      marginBottom: 75,
+    },
+    buttonRow: {
+      flexDirection: 'row',
+      gap: 12,
+    },
+  });
 
   return (
     <View style={styles.wrapper}>
@@ -56,29 +93,3 @@ export default function AffirmationSection() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    alignItems: 'center',
-    marginTop: 35,
-    paddingBottom: 32,
-  },
-  image: {
-    width: 300,
-    height: 250,
-    borderRadius: 20,
-    resizeMode: 'cover',
-    marginBottom: 70,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: COLORS.textPrimary,
-    textAlign: 'center',
-    marginBottom: 75,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-});
