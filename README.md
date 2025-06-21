@@ -7,21 +7,6 @@
 - Categories of affirmations and chakras
 - Components implemented in the Figma design style with responsive styling
 
-## 📦 Assignment 5: API Integration and Data Handling
-
-This app implements all required steps of the [cross_assignment_5] task:
-
-- ✅ **API Selection:** Since the app theme is focused on mindfulness and affirmations, we used a mock `affirmations.json` file as a local data source (imitating a public REST API).
-- ✅ **API Integration:** The logic is modularized into `api.js`, with a simulated `fetchAffirmations()` function that returns Promise-based data.
-- ✅ **State Management:** Data is loaded and handled via `useState` in the `AffirmationSection` component.
-- ✅ **Data Display:** The affirmation text is shown on the screen with buttons: "Save to favorites" and "New affirmation".
-- ✅ **Loading/Error Handling:** Loading state and error messages are shown via `ActivityIndicator` and `Text`.
-- ✅ **Navigation:** The component is fully integrated in the `HomeScreen` tab structure via a category switcher.
-
-### 🎥 Demo: Affirmation Switching
-
-![Affirmation Demo](./screenshots/affirmation-demo.gif)
-
 ## 📗 Assignment 6: State Management with Context API and Redux
 
 - ✅ **Context API for Theme:**  
@@ -45,3 +30,31 @@ This app implements all required steps of the [cross_assignment_5] task:
 ### 🎥 Demo: Themes and Favourites
 
 ![Themes and Favourites Demo](./screenshots/themesAndFavourites.gif)
+
+## 📦 Assignment 7: Performance Optimization and Animations
+
+### 1. App Analysis
+- Selected `CategoryTabs` and `FavouritesTabs` for animation with `LayoutAnimation`.
+- Identified `HomeScreen` and `FavouritesScreen` as components with frequent re-renders.
+- Checked project dependencies; **no heavy libraries like moment or lodash found**.
+
+### 2. Animation
+- Implemented smooth and visible animations for tab and category switching using React Native’s `LayoutAnimation`.
+- Animations enhance UX by smoothly transitioning active tabs/categories.
+
+### 3. Render Optimization
+- Wrapped key components (`HomeScreen`, `FavouritesScreen`, `CategoryTabs`, `FavouritesTabs`, `Card`, and `AffirmationSection`) with `React.memo` to prevent unnecessary re-renders.
+- Used `useCallback` to memoize functions passed as props.
+- Applied `useMemo` to memoize computed values and styles.
+
+### 4. Dependency Cleanup
+- Verified dependencies for heavy packages; none found that require replacement.
+- Project remains lightweight and maintainable.
+
+## Results
+- Improved app responsiveness by reducing redundant renders.
+- Enhanced UI fluidity with smooth, native animations.
+- Clean and maintainable code with proper memoization and callbacks.
+
+![Animation](./screenshots/animation.gif)
+

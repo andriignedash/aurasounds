@@ -1,6 +1,21 @@
-import React, {useContext} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useContext, useCallback} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const categories = [
   {key: 'mood', label: 'Mood'},
@@ -10,6 +25,14 @@ const categories = [
 
 const CategoryTabs = ({activeCategory, onChange}) => {
   const {themeColors} = useContext(ThemeContext);
+
+  const handlePress = useCallback(
+    key => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      onChange(key);
+    },
+    [onChange],
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -61,7 +84,7 @@ const CategoryTabs = ({activeCategory, onChange}) => {
           <React.Fragment key={category.key}>
             <TouchableOpacity
               style={[styles.tab, isActive && styles.activeTab]}
-              onPress={() => onChange(category.key)}>
+              onPress={() => handlePress(category.key)}>
               <Text
                 style={[
                   styles.label,
@@ -78,4 +101,4 @@ const CategoryTabs = ({activeCategory, onChange}) => {
   );
 };
 
-export default CategoryTabs;
+export default React.memo(CategoryTabs);

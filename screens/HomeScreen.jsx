@@ -1,19 +1,25 @@
-import React, {useState, useContext} from 'react';
-import {View, ScrollView, StyleSheet, Text, Image} from 'react-native';
+import React, {useState, useContext, useCallback, useMemo} from 'react';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import CategoryTabs from '../components/CategoryTabs';
 import Card from '../components/Card';
 import AffirmationBanner from '../components/AffirmationBanner';
 import moodPlaylists from '../data/moodPlaylists';
 import chakraPlaylists from '../data/chakraPlaylists';
-import CustomButton from '../components/CustomButton';
 import AffirmationSection from '../components/AffirmationSection';
 import {ThemeContext} from '../context/ThemeContext';
 
-export default function HomeScreen({navigation}) {
+const HomeScreen = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState('mood');
   const {themeColors} = useContext(ThemeContext);
 
-  const renderContent = () => {
+  const handlePress = useCallback(
+    playlistId => {
+      navigation.navigate('PlaylistDetails', {playlistId});
+    },
+    [navigation],
+  );
+
+  const content = useMemo(() => {
     switch (activeCategory) {
       case 'mood':
         return (
@@ -23,11 +29,7 @@ export default function HomeScreen({navigation}) {
                 <View key={playlist.id} style={styles.cardWrapper}>
                   <Card
                     playlistId={playlist.id}
-                    onPress={() =>
-                      navigation.navigate('PlaylistDetails', {
-                        playlistId: playlist.id,
-                      })
-                    }
+                    onPress={() => handlePress(playlist.id)}
                   />
                 </View>
               ))}
@@ -44,11 +46,7 @@ export default function HomeScreen({navigation}) {
               <View key={playlist.id} style={styles.cardWrapper}>
                 <Card
                   playlistId={playlist.id}
-                  onPress={() =>
-                    navigation.navigate('PlaylistDetails', {
-                      playlistId: playlist.id,
-                    })
-                  }
+                  onPress={() => handlePress(playlist.id)}
                 />
               </View>
             ))}
@@ -59,7 +57,7 @@ export default function HomeScreen({navigation}) {
       default:
         return null;
     }
-  };
+  }, [activeCategory, handlePress]);
 
   return (
     <ScrollView
@@ -71,11 +69,11 @@ export default function HomeScreen({navigation}) {
           activeCategory={activeCategory}
           onChange={setActiveCategory}
         />
-        {renderContent()}
+        {content}
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   scrollContent: {
@@ -96,26 +94,6 @@ const styles = StyleSheet.create({
     width: '48%',
     marginBottom: 16,
   },
-  affirmationWrapper: {
-    alignItems: 'center',
-    marginTop: 35,
-    paddingBottom: 32,
-  },
-  affirmationImage: {
-    width: 300,
-    height: 250,
-    borderRadius: 20,
-    resizeMode: 'cover',
-    marginBottom: 70,
-  },
-  affirmationText: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 75,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    gap: 12,
-  },
 });
+
+export default React.memo(HomeScreen);

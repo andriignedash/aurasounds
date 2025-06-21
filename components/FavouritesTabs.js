@@ -1,6 +1,21 @@
-import React, {useContext} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useContext, useCallback} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+} from 'react-native';
 import {ThemeContext} from '../context/ThemeContext';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const tabs = [
   {key: 'playlists', label: 'Playlists'},
@@ -9,6 +24,14 @@ const tabs = [
 
 const FavouritesTabs = ({activeTab, onChange}) => {
   const {themeColors} = useContext(ThemeContext);
+
+  const handlePress = useCallback(
+    key => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      onChange(key);
+    },
+    [onChange],
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -60,7 +83,7 @@ const FavouritesTabs = ({activeTab, onChange}) => {
           <React.Fragment key={tab.key}>
             <TouchableOpacity
               style={[styles.tab, isActive && styles.activeTab]}
-              onPress={() => onChange(tab.key)}>
+              onPress={() => handlePress(tab.key)}>
               <Text
                 style={[
                   styles.label,
@@ -77,4 +100,4 @@ const FavouritesTabs = ({activeTab, onChange}) => {
   );
 };
 
-export default FavouritesTabs;
+export default React.memo(FavouritesTabs);

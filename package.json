@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "analyze-android": "source-map-explorer android/app/build/generated/assets/react/release/index.android.bundle android/app/build/generated/sourcemaps/react/release/index.android.bundle.map",
+    "analyze-ios": "source-map-explorer ios/main.jsbundle ios/main.jsbundle.map"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.3.14",
@@ -39,6 +41,7 @@
     "jest": "^29.6.3",
     "prettier": "2.8.8",
     "react-test-renderer": "19.0.0",
+    "source-map-explorer": "^2.5.3",
     "typescript": "5.0.4"
   },
   "engines": {
