@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   playlists: [],
+  affirmations: [],
 };
 
 const favouritesSlice = createSlice({
@@ -21,8 +22,27 @@ const favouritesSlice = createSlice({
         item => item.id !== action.payload,
       );
     },
+    addAffirmationToFavourites: (state, action) => {
+      const exists = state.affirmations.find(
+        item => item.text === action.payload.text,
+      );
+      if (!exists) {
+        state.affirmations.push(action.payload);
+      }
+    },
+    removeAffirmationFromFavourites: (state, action) => {
+      state.affirmations = state.affirmations.filter(
+        item => item.text !== action.payload.text,
+      );
+    },
   },
 });
 
-export const {addToFavourites, removeFromFavourites} = favouritesSlice.actions;
+export const {
+  addToFavourites,
+  removeFromFavourites,
+  addAffirmationToFavourites,
+  removeAffirmationFromFavourites,
+} = favouritesSlice.actions;
+
 export default favouritesSlice.reducer;

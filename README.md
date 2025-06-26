@@ -1,60 +1,63 @@
 # AuraSounds
 
-**AuraSounds** is a mobile application for restoring inner balance through music, affirmations, and practices related to mood and chakras.
+**AuraSounds** is a mobile application for restoring inner balance through music, affirmations, and chakra-based practices.
 
-## Features
+## 🎯 Key Features
 - Thematic playlists for different emotional states (Calm, Inspired, Focused, Clear, etc.)
-- Categories of affirmations and chakras
-- Components implemented in the Figma design style with responsive styling
+- Categories for affirmations and chakras
+- Favorites support for playlists and affirmations
+- Modern Figma-style interface with adaptive styling
 
-## 📗 Assignment 6: State Management with Context API and Redux
+---
 
-- ✅ **Context API for Theme:**  
-  - Implemented `ThemeContext` with `ThemeProvider` to manage light/dark themes globally.  
-  - Added theme toggle switch allowing dynamic theme changes.  
-  - Applied theme colors consistently across multiple components and navigation headers.
+## 📘 Final Project: State Management, UX Improvements and New Features
 
-- ✅ **Redux for Favorites Management:**  
-  - Created `favoritesSlice` using Redux Toolkit with actions to add and remove playlists from favorites.  
-  - Configured Redux store and connected it to the app via `<Provider>`.  
-  - Managed favorites state via `useSelector` and `useDispatch` hooks.  
-  - Enabled adding/removing favorites in `PlaylistDetailsScreen` via a like button.  
-  - Displayed favorite playlists on the `FavouritesScreen` with navigation to playlist details.
+### ✅ **1. State Management**
 
-- ✅ **Code Modularity and Clean Architecture:**  
-  - Organized Context and Redux slices in separate files.  
-  - Used constants for colors and texts for better maintainability.  
-  - Passed dynamic data via props.  
-  - Maintained clear and commented code following best practices.
+- **Context API for Theme:**
+  - Implemented `ThemeContext` to manage light/dark theme globally
+  - Dynamically applied theme colors to components and headers
 
-### 🎥 Demo: Themes and Favourites
+- **Redux for Favorites (Playlists + Affirmations):**
+  - Created `favouritesSlice` using Redux Toolkit
+  - Enabled adding/removing playlists to favorites in `PlaylistDetailsScreen`
+  - Enabled saving/removing affirmations in `AffirmationSection`
+  - Displayed saved items in `FavouritesScreen` with two tabs: playlists and affirmations
 
-![Themes and Favourites Demo](./screenshots/themesAndFavourites.gif)
+---
 
-## 📦 Assignment 7: Performance Optimization and Animations
+### ✨ **2. New Functionalities and Components**
 
-### 1. App Analysis
-- Selected `CategoryTabs` and `FavouritesTabs` for animation with `LayoutAnimation`.
-- Identified `HomeScreen` and `FavouritesScreen` as components with frequent re-renders.
-- Checked project dependencies; **no heavy libraries like moment or lodash found**.
+- **New Functionality:**
+  - Saving affirmations to the favorites list using Redux
 
-### 2. Animation
-- Implemented smooth and visible animations for tab and category switching using React Native’s `LayoutAnimation`.
-- Animations enhance UX by smoothly transitioning active tabs/categories.
+- **New Component:**
+  - `PostCard` component for rendering affirmations in the favorites screen
 
-### 3. Render Optimization
-- Wrapped key components (`HomeScreen`, `FavouritesScreen`, `CategoryTabs`, `FavouritesTabs`, `Card`, and `AffirmationSection`) with `React.memo` to prevent unnecessary re-renders.
-- Used `useCallback` to memoize functions passed as props.
-- Applied `useMemo` to memoize computed values and styles.
+- **Favorite Buttons:**
+  - Save/Remove buttons for affirmations
+  - Like button for playlists
 
-### 4. Dependency Cleanup
-- Verified dependencies for heavy packages; none found that require replacement.
-- Project remains lightweight and maintainable.
+- **Tabs and Filtering:**
+  - `FavouritesTabs` for switching between playlists and affirmations
+  - `CategoryTabs` for category filtering on the home screen
 
-## Results
-- Improved app responsiveness by reducing redundant renders.
-- Enhanced UI fluidity with smooth, native animations.
-- Clean and maintainable code with proper memoization and callbacks.
+---
 
-![Animation](./screenshots/animation.gif)
+### 🎨 **3. UI/UX Enhancements**
 
+- Adaptive styling with theme-based color usage
+- Shadows, spacing, and responsive sizing applied across elements
+- Reusable components: `Card`, `PostCard`, `AffirmationSection`, `CustomButton`, `Player`
+
+---
+
+### 🧠 **4. Architecture and Modularity**
+
+- Clear file structure: components, styles, API, Redux, context
+- `Redux` used for global favorites state
+- `Context API` used for theme handling
+- `api.js` handles external API (mocked affirmations)
+- Navigation: Stack + Bottom Tabs + nested stacks for Profile/Favourites
+
+![Favourites](./screenshots/favourites.png)

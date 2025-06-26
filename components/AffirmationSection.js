@@ -7,9 +7,14 @@ import React, {
   useRef,
 } from 'react';
 import {View, Text, Image, ActivityIndicator, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from './CustomButton';
 import {fetchAffirmations} from '../api/api';
 import {ThemeContext} from '../context/ThemeContext';
+import {
+  addAffirmationToFavourites,
+  removeAffirmationFromFavourites,
+} from '../redux/favouritesSlice';
 
 const AffirmationSection = () => {
   const {themeColors} = useContext(ThemeContext);
@@ -18,6 +23,11 @@ const AffirmationSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const hasLoaded = useRef(false);
+
+  const dispatch = useDispatch();
+  const favouriteAffirmations = useSelector(
+    state => state.favourites?.affirmations || [],
+  );
 
   useEffect(() => {
     if (hasLoaded.current) {
@@ -45,6 +55,21 @@ const AffirmationSection = () => {
     } while (nextIndex === currentIndex && affirmations.length > 1);
     setCurrentIndex(nextIndex);
   }, [affirmations, currentIndex]);
+
+  const current = affirmations[currentIndex];
+
+  const isFavourite = useMemo(() => {
+    return favouriteAffirmations.some(item => item.text === current?.text);
+  }, [favouriteAffirmations, current]);
+
+  const handleToggleFavourite = useCallback(() => {
+    if (!current) return;
+    if (isFavourite) {
+      dispatch(removeAffirmationFromFavourites(current));
+    } else {
+      dispatch(addAffirmationToFavourites(current));
+    }
+  }, [current, isFavourite, dispatch]);
 
   const styles = useMemo(
     () =>
@@ -94,8 +119,6 @@ const AffirmationSection = () => {
     );
   }
 
-  const current = affirmations[currentIndex];
-
   if (!current) return null;
 
   return (
@@ -107,9 +130,9 @@ const AffirmationSection = () => {
       <Text style={styles.text}>{current.text}</Text>
       <View style={styles.buttonRow}>
         <CustomButton
-          title="Save to favorites"
-          variant="outline"
-          onPress={() => {}}
+          title={isFavourite ? 'Remove from favorites' : 'Save to favorites'}
+          variant={isFavourite ? 'filled' : 'outline'}
+          onPress={handleToggleFavourite}
         />
         <CustomButton title="New affirmation" onPress={handleNewAffirmation} />
       </View>

@@ -6,11 +6,20 @@ import FavouritesTabs from '../components/FavouritesTabs';
 import {TEXTS} from '../constants/texts';
 import {ThemeContext} from '../context/ThemeContext';
 import Card from '../components/Card';
+import PostCard from '../components/PostCard';
 
 const FavouritesScreen = () => {
   const {themeColors} = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState('playlists');
   const navigation = useNavigation();
+
+  const favoritePlaylists = useSelector(
+    state => state.favourites?.playlists || [],
+  );
+
+  const favoriteAffirmations = useSelector(
+    state => state.favourites?.affirmations || [],
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -34,10 +43,6 @@ const FavouritesScreen = () => {
     },
   });
 
-  const favoritePlaylists = useSelector(
-    state => state.favorites?.playlists || [],
-  );
-
   const handleCardPress = useCallback(
     playlistId => {
       navigation.navigate('PlaylistDetails', {playlistId});
@@ -45,16 +50,11 @@ const FavouritesScreen = () => {
     [navigation],
   );
 
-  const content = useMemo(() => {
+  const renderContent = useMemo(() => {
     if (activeTab === 'playlists') {
-      if (!favoritePlaylists.length) {
-        return (
-          <Text style={styles.placeholder}>{TEXTS.NOSAVED.PLAYLISTS}</Text>
-        );
-      }
-
-      return (
+      return favoritePlaylists.length ? (
         <FlatList
+          key="playlists"
           data={favoritePlaylists}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
@@ -67,22 +67,38 @@ const FavouritesScreen = () => {
             />
           )}
         />
+      ) : (
+        <Text style={styles.placeholder}>{TEXTS.NOSAVED.PLAYLISTS}</Text>
       );
     }
 
     if (activeTab === 'affirmations') {
-      return (
+      return favoriteAffirmations.length ? (
+        <FlatList
+          key="affirmations"
+          data={favoriteAffirmations}
+          keyExtractor={(item, index) => item.text + index}
+          contentContainerStyle={{gap: 16, paddingBottom: 16}}
+          renderItem={({item}) => <PostCard text={item.text} />}
+        />
+      ) : (
         <Text style={styles.placeholder}>{TEXTS.NOSAVED.AFFIRMATIONS}</Text>
       );
     }
 
     return null;
-  }, [activeTab, favoritePlaylists, handleCardPress, styles]);
+  }, [
+    activeTab,
+    favoritePlaylists,
+    favoriteAffirmations,
+    handleCardPress,
+    styles,
+  ]);
 
   return (
     <View style={styles.container}>
       <FavouritesTabs activeTab={activeTab} onChange={setActiveTab} />
-      {content}
+      {renderContent}
     </View>
   );
 };

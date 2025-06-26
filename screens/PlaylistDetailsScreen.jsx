@@ -13,7 +13,7 @@ export default function PlaylistDetailsScreen({route}) {
 
   const dispatch = useDispatch();
   const isFavorite = useSelector(state =>
-    state.favorites.playlists?.some(p => p.id === playlistId),
+    state.favourites.playlists?.some(p => p.id === playlistId),
   );
 
   const handleLikeToggle = () => {
