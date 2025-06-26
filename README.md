@@ -60,4 +60,4 @@
 - `api.js` handles external API (mocked affirmations)
 - Navigation: Stack + Bottom Tabs + nested stacks for Profile/Favourites
 
-![Favourites](./screenshots/favourites.png)
+![Favourites](./screenshots/favourites.gif)
